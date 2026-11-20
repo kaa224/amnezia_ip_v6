@@ -1,0 +1,31 @@
+[Unit]
+Description=Personal fixed IPv6 UDP relay
+Wants=network-online.target
+After=network-online.target vpn31-filter.service
+Requires=vpn31-filter.service
+BindsTo=vpn31-filter.service
+
+[Service]
+Type=simple
+DynamicUser=yes
+UMask=0077
+LoadCredential=realm.toml:/etc/realm31/realm.toml
+ExecStart=/opt/realm31/bin/realm -c %d/realm.toml
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+CapabilityBoundingSet=
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+LimitCORE=0
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy=multi-user.target

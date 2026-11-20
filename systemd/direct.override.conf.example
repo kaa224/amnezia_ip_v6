@@ -1,0 +1,9 @@
+# Install as /etc/systemd/system/awg31@direct.service.d/override.conf
+[Service]
+ExecStart=
+ExecStart=/opt/awg31/bin/amneziawg-go -f awg31d
+ExecStartPost=
+ExecStartPost=/bin/sh -c 'n=0; while [ ! -S /run/personal-awg31/amneziawg/awg31d.sock ]; do n=$$((n+1)); [ "$$n" -lt 100 ] || exit 1; sleep 0.1; done; exec /opt/awg31/bin/awg setconf awg31d /etc/awg31/direct.conf'
+ExecStartPost=/usr/sbin/ip address add 203.0.113.1/26 dev awg31d
+ExecStartPost=/usr/sbin/ip -6 address add 2001:db8:31:1::1/64 dev awg31d
+ExecStartPost=/usr/sbin/ip link set dev awg31d mtu 1280 up

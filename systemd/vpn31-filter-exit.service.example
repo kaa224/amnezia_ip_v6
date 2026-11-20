@@ -1,0 +1,25 @@
+# Install ONLY ONE of exit/relay variants as vpn31-filter.service on its VPS.
+# Manual review required. First boot load only; does not flush global rules.
+[Unit]
+Description=Personal VPN additive filter (exit)
+Wants=network-online.target
+After=network-online.target
+Before=awg31@direct.service awg31@relay.service
+# Add After=/Requires= for your actual firewall manager as appropriate.
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=/usr/sbin/iptables-restore --test --noflush /etc/awg31/exit.v4.rules
+ExecStartPre=/usr/sbin/ip6tables-restore --test --noflush /etc/awg31/exit.v6.rules
+ExecStart=/usr/sbin/iptables-restore --noflush /etc/awg31/exit.v4.rules
+ExecStart=/usr/sbin/ip6tables-restore --noflush /etc/awg31/exit.v6.rules
+# No ExecStop: preserve restrictive rules. Manual exact-chain cleanup only.
+# Re-running with existing chain names fails rather than overwriting them.
+User=root
+UMask=0077
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy=multi-user.target

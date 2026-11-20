@@ -1,0 +1,41 @@
+# Adapt paths for your OS. Requires administrator-provided local firewall unit.
+[Unit]
+Description=Personal AWG 3.1 %i
+Wants=network-online.target
+After=network-online.target vpn31-filter.service
+Requires=vpn31-filter.service
+BindsTo=vpn31-filter.service
+
+[Service]
+Type=simple
+User=root
+UMask=0077
+RuntimeDirectory=personal-awg31/amneziawg
+RuntimeDirectoryMode=0700
+RuntimeDirectoryPreserve=yes
+Environment=LOG_LEVEL=silent
+ExecStart=/opt/awg31/bin/amneziawg-go -f awg31REPLACE_INSTANCE_SUFFIX
+# Drop-ins override ExecStart with a literal validated interface name.
+ExecStartPost=/bin/sh -c 'n=0; while [ ! -S /run/personal-awg31/amneziawg/awg31REPLACE_INSTANCE_SUFFIX.sock ]; do n=$$((n+1)); [ "$$n" -lt 100 ] || exit 1; sleep 0.1; done; exec /opt/awg31/bin/awg setconf awg31REPLACE_INSTANCE_SUFFIX /etc/awg31/%i.conf'
+# Drop-ins replace the two lines above and add only interface address/MTU actions.
+Restart=on-failure
+RestartSec=5
+KillMode=control-group
+NoNewPrivileges=true
+CapabilityBoundingSet=CAP_NET_ADMIN
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/run/personal-awg31
+PrivateTmp=true
+DevicePolicy=closed
+DeviceAllow=/dev/net/tun rw
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+LimitCORE=0
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,22 @@
+# [Interface] fragment ONLY, not a deployable file. No real parameter values.
+# Fill privately using pinned official implementation constraints.
+Jc = REPLACE_JC
+Jmin = REPLACE_JMIN
+Jmax = REPLACE_JMAX
+S1 = REPLACE_S1
+S2 = REPLACE_S2
+S3 = REPLACE_S3
+S4 = REPLACE_S4
+H1 = REPLACE_H1
+H2 = REPLACE_H2
+H3 = REPLACE_H3
+H4 = REPLACE_H4
+HeaderProtectionKey = REPLACE_INSTANCE_HEADER_PROTECTION_KEY
+ContentPaddingAddition = REPLACE_CONTENT_PADDING_RANGE
+RekeyAfterTime = REPLACE_REKEY_AFTER_RANGE
+RekeyTimeout = REPLACE_REKEY_TIMEOUT_RANGE
+RejectAfterTime = REPLACE_REJECT_AFTER_RANGE
+KeepaliveTimeout = REPLACE_KEEPALIVE_TIMEOUT_RANGE
+MaxHandshakeAttempts = REPLACE_HANDSHAKE_ATTEMPTS_RANGE
+RandomTrailers = REPLACE_RANDOM_TRAILERS_ON_OR_OFF
+DisableCookies = off

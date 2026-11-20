@@ -1,0 +1,16 @@
+# One device/route only. Never import this unfilled template.
+[Interface]
+PrivateKey = REPLACE_CLIENT_PRIVATE_KEY
+Address = 203.0.113.2/32, 2001:db8:31:1::2/128
+DNS = REPLACE_DNS_PRIMARY, REPLACE_DNS_SECONDARY
+MTU = 1280
+# Insert matching filled protocol.conf.example fragment HERE before [Peer].
+
+[Peer]
+PublicKey = REPLACE_SERVER_PUBLIC_KEY
+PresharedKey = REPLACE_CLIENT_PSK
+AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = 192.0.2.10:52010
+PersistentKeepalive = 25
+# Relay: 198.51.100.20:52012, with relay-specific addresses/keys/parameters.
+# iOS: use its own unique address and keys, not the Windows profile.

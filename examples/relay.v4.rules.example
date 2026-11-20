@@ -1,0 +1,7 @@
+# Frontend only. No kernel forward/NAT required by userspace Realm.
+*filter
+-N PV31_FRONT
+-A PV31_FRONT -d 198.51.100.20/32 -j ACCEPT
+-A PV31_FRONT -j DROP
+-I INPUT 1 -p udp --dport 52012 -j PV31_FRONT
+COMMIT

@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.local/
+.secrets/
+*.key
+*.psk
+*.qr
+*.png
+*.conf
+!examples/*.conf.example

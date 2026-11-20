@@ -1,0 +1,16 @@
+# awg setconf format, not awg-quick. Duplicate independently for direct/relay.
+[Interface]
+PrivateKey = REPLACE_SERVER_PRIVATE_KEY
+ListenPort = REPLACE_LISTEN_PORT
+# Insert filled protocol.conf.example fragment HERE before [Peer].
+
+[Peer]
+PublicKey = REPLACE_WINDOWS_CLIENT_PUBLIC_KEY
+PresharedKey = REPLACE_WINDOWS_CLIENT_PSK
+AllowedIPs = 203.0.113.2/32, 2001:db8:31:1::2/128
+
+[Peer]
+PublicKey = REPLACE_IOS_CLIENT_PUBLIC_KEY
+PresharedKey = REPLACE_IOS_CLIENT_PSK
+AllowedIPs = 203.0.113.3/32, 2001:db8:31:1::3/128
+# For relay use its own subnet and peers, not these direct addresses.

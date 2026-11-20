@@ -1,0 +1,28 @@
+# IPv6: backend only from fixed relay source; client IPv6 intentionally blocked.
+*filter
+-N PV31D_P6
+-N PV31D_H6
+-N PV31D_O6
+-N PV31D_I6
+-N PV31R_P6
+-N PV31R_H6
+-N PV31R_O6
+-N PV31R_I6
+-A PV31D_P6 -j DROP
+-A PV31D_H6 -j DROP
+-A PV31D_O6 -j DROP
+-A PV31D_I6 -j DROP
+-I INPUT 1 -p udp --dport 52010 -j PV31D_P6
+-I FORWARD 1 -i awg31d -j PV31D_O6
+-I FORWARD 1 -o awg31d -j PV31D_I6
+-A PV31R_P6 -s 2001:db8:20::20/128 -d 2001:db8:10::10/128 -j ACCEPT
+-A PV31R_P6 -j DROP
+-A PV31R_H6 -j DROP
+-A PV31R_O6 -j DROP
+-A PV31R_I6 -j DROP
+-I INPUT 1 -p udp --dport 52011 -j PV31R_P6
+-I FORWARD 1 -i awg31r -j PV31R_O6
+-I FORWARD 1 -o awg31r -j PV31R_I6
+-I INPUT 1 -i awg31d -j PV31D_H6
+-I INPUT 1 -i awg31r -j PV31R_H6
+COMMIT
